@@ -17,23 +17,17 @@ def homepage():
 @app.route('/froyo')
 def choose_froyo():
     """Shows a form to collect the user's Fro-Yo order."""
-    return """
-    <form action="/froyo_results" method="GET">
-        What is your favorite Fro-yo flavor? <br/>
-        <input type="text" name="flavor"><br/>
-        What topping do you want? <br/>
-        <input type="text" name="toppings"><br/>
-        <input type="submit" value="Submit!">
-    </form>
-    """
+    return render_template('froyo_form.html')
     
 
 @app.route('/froyo_results')
 def show_froyo_results():
     """Shows the user what they ordered from the previous page."""
-    users_froyo_flavor = request.args.get('flavor')
-    user_froyo_topping = request.args.get('toppings')
-    return f'You ordered {users_froyo_flavor} flavored Fro-Yo with {user_froyo_topping} toppings!'
+    context = {
+        'users_froyo_flavor' : request.args.get('flavor'),
+        'user_froyo_topping' : request.args.get('toppings') 
+    }
+    return render_template('froyo_results.html', **context)
 
 @app.route('/favorites')
 def favorites():
@@ -103,13 +97,13 @@ def calculator_results():
     if operation == "add":
         result = num1 + num2
         return f'You chose to add {num1} and {num2}. Your result is: {result}'
-    else if operation == "subtract":
+    elif operation == "subtract":
         result = num1 - num2
         return f'You chose to subtract {num1} and {num2}. Your result is: {result}'
-    else if operation == "multiply":
+    elif operation == "multiply":
         result = num1 * num2
         return f'You chose to multiply {num1} and {num2}. Your result is: {result}'
-    else if opreation == "divide":
+    elif opreation == "divide":
         result = num1 / num2
         return f'You chose to divide {num1} and {num2}. Your result is: {result}'
     
