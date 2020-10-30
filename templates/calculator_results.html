@@ -5,8 +5,19 @@
     </head>
     <body>
         <!-- Your HTML code goes here! -->
+        {% if operation == "add" %}
+            <p>You chose to add {{num1}} and {{num2}}. Your result is: {{result}}</p>
 
+        {% elif operation == "subtract" %}
+            <p>You chose to subtract {{num1}} and {{num2}}. Your result is: {{result}}</p>
 
+        {% elif operation == "multiply" %}
+            <p>You chose to multiply {{num1}} and {{num2}}. Your result is: {{result}}</p>
+
+        {% elif operation == "divide" %}
+            <p>You chose to divide {{num1}} and {{num2}}. Your result is: {{result}}</p>
+
+        {% endif %}
 
 
 

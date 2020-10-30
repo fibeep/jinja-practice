@@ -73,20 +73,7 @@ def secret_message():
 @app.route('/calculator')
 def calculator():
     """Shows the user a form to enter 2 numbers and an operation."""
-    return """
-    <form action="/calculator_results" method="GET">
-        Please enter 2 numbers and select an operator.<br/><br/>
-        <input type="number" name="operand1">
-        <select name="operation">
-            <option value="add">+</option>
-            <option value="subtract">-</option>
-            <option value="multiply">*</option>
-            <option value="divide">/</option>
-        </select>
-        <input type="number" name="operand2">
-        <input type="submit" value="Submit!">
-    </form>
-    """
+    return render_template('calculator_form.html')
 
 @app.route('/calculator_results')
 def calculator_results():
@@ -94,20 +81,26 @@ def calculator_results():
     num1 = int(request.args.get('operand1'))
     num2 = int(request.args.get('operand2'))
     operation = request.args.get('operation')
-    if operation == "add":
-        result = num1 + num2
-        return f'You chose to add {num1} and {num2}. Your result is: {result}'
-    elif operation == "subtract":
-        result = num1 - num2
-        return f'You chose to subtract {num1} and {num2}. Your result is: {result}'
-    elif operation == "multiply":
-        result = num1 * num2
-        return f'You chose to multiply {num1} and {num2}. Your result is: {result}'
-    elif opreation == "divide":
-        result = num1 / num2
-        return f'You chose to divide {num1} and {num2}. Your result is: {result}'
     
-    
+    def calculation():
+        if operation == "add":
+            return num1 + num2
+        elif operation == "subtract":
+            return num1 - num2
+        elif operation == "multiply":
+            return num1 * num2
+        elif operation == "divide":
+            return num1 / num2
+
+    result = calculation()
+        
+    context = {
+        'num1' : int(request.args.get('operand1')),
+        'num2': int(request.args.get('operand2')),
+        'operation' : request.args.get('operation'),
+        'result' : result
+    }
+    return render_template('calculator_results.html', **context)
 
 
 # List of compliments to be used in the `compliments_results` route (feel free 
@@ -148,8 +141,11 @@ def compliments():
 def compliments_results():
     """Show the user some compliments."""
     context = {
-        # TODO: Enter your context variables here.
-    }
+        'users_name' : request.args.get('users_name'),
+        'want_compliment' : request.args.get('wants_compliment'),
+        'num_compliments' : int(request.args.get('num_compliments')),
+        'compliment' : random.sample(list_of_compliments, k= int(request.args.get('num_compliments')))
+            }
 
     return render_template('compliments_results.html', **context)
 

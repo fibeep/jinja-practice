@@ -5,9 +5,17 @@
     </head>
     <body>
         <!-- Your HTML code goes here! -->
-
-        
-
+        <h1>Hi {{users_name}} how are you?</h1><br>
+         {% if want_compliments == "yes" %}
+        <h2>You Are</h2>
+        <ul>
+        {% for i in range (num_compliments) %}
+            <li>{{compliment}}</li>
+        </ul>
+        {% endfor %}
+       {% else %}
+        <p>You did not request compliments</p>
+      {% endif %} 
         
         
     </body>
