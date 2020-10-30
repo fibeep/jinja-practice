@@ -62,12 +62,19 @@ def favorites_results():
 def secret_message():
     """Shows the user a form to collect a secret message. Sends the result via
     the POST method to keep it a secret!"""
-    pass
+    return """
+    <form action="/message_results" method="POST">
+        What is your secret message?<br/>
+        <input type="text" name"message"><br/>
+        <input type="submit" value="Submit!">
+    </form>
+    """
 
-@app.route('/message_results', methods=['POST'])
-def message_results():
-    """Shows the user their message, with the letters in sorted order."""
-    pass
+# @app.route('/message_results', methods=['POST'])
+# def message_results():
+#     """Shows the user their message, with the letters in sorted order."""
+#     message = request.form.get('message')
+#     return  f'Here is your secret message: {message}'
 
 @app.route('/calculator')
 def calculator():
@@ -90,7 +97,23 @@ def calculator():
 @app.route('/calculator_results')
 def calculator_results():
     """Shows the user the result of their calculation."""
-    pass
+    num1 = int(request.args.get('operand1'))
+    num2 = int(request.args.get('operand2'))
+    operation = request.args.get('operation')
+    if operation == "add":
+        result = num1 + num2
+        return f'You chose to add {num1} and {num2}. Your result is: {result}'
+    else if operation == "subtract":
+        result = num1 - num2
+        return f'You chose to subtract {num1} and {num2}. Your result is: {result}'
+    else if operation == "multiply":
+        result = num1 * num2
+        return f'You chose to multiply {num1} and {num2}. Your result is: {result}'
+    else if opreation == "divide":
+        result = num1 / num2
+        return f'You chose to divide {num1} and {num2}. Your result is: {result}'
+    
+    
 
 
 # List of compliments to be used in the `compliments_results` route (feel free 
