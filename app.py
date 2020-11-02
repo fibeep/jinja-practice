@@ -64,11 +64,18 @@ def secret_message():
     </form>
     """
 
-# @app.route('/message_results', methods=['POST'])
-# def message_results():
-#     """Shows the user their message, with the letters in sorted order."""
-#     message = request.form.get('message')
-#     return  f'Here is your secret message: {message}'
+@app.route('/message_results', methods=['POST'])
+def message_results():
+    """Shows the user their message, with the letters in sorted order."""
+    message = request.form.get('message')
+    meesage_list = sorted(message)
+    def list_to_string(secret_message):
+        new_string = ""
+        for char in secret_message:
+            new_string += char
+        return new_string
+    sorted_message = list_to_string(meesage_list)
+    return  f'Here is your secret message: {sorted_message}'
 
 @app.route('/calculator')
 def calculator():
